@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import collections
 import datetime
@@ -35,15 +35,15 @@ def ask_question(question):
     start_time = time.time()
     error_count = 0
     while True:
-        print '{} {} {} = ... '.format(
-            question.first, question.operation, question.second)
+        print('{} {} {} = ... '.format(
+            question.first, question.operation, question.second))
         try:
-            result = int(raw_input())
+            result = int(input())
         except ValueError:
             result = None
         if result == question.expected:
             break
-        print 'WRONG!'
+        print('WRONG!')
         error_count += 1
     time_delta = time.time() - start_time
     return Result(question, error_count, time_delta)
@@ -78,18 +78,18 @@ def main():
     results = []
     start = time.time()
     error_count = 0
-    for question_idx in xrange(1, QUESTION_COUNT + 1):
-        print '# {}:'.format(question_idx)
+    for question_idx in range(1, QUESTION_COUNT + 1):
+        print('# {}:'.format(question_idx))
         question = make_question()
         result = ask_question(question)
         error_count += result.error_count
         results.append(result)
     time_delta = time.time() - start
     save_results(results)
-    print '{} operations took {} sec. {} errors'.format(
+    print('{} operations took {} sec. {} errors'.format(
         QUESTION_COUNT,
         time_delta,
-        error_count)
+        error_count))
 
 
 if __name__ == '__main__':
