@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import bisect
 import collections
 import datetime
 import json
@@ -75,9 +76,21 @@ def save_results(results):
     with open(file_name, 'w') as f:
         json.dump(results_to_dicts(results), f, indent=2)
 
+def load_all_times():
+    result = []
+    for file_name in os.listdir(RESULTS_DIR):
+        date_str = file_name.split('.')[0]
+        if not date_str:
+            continue
+        with open(os.path.join(RESULTS_DIR, file_name), 'r') as f:
+            items = json.load(f)
+        total_time = sum(d['time_sec'] for d in items)
+        result.append(total_time)
+    return result
 
 def main():
     results = []
+    all_times = load_all_times()
     start = time.time()
     error_count = 0
     for question_idx in range(1, QUESTION_COUNT + 1):
@@ -88,10 +101,10 @@ def main():
         results.append(result)
     time_delta = time.time() - start
     save_results(results)
-    print('{} operations took {} sec. {} errors'.format(
-        QUESTION_COUNT,
-        time_delta,
-        error_count))
+    all_times.sort()
+    this_place = bisect.bisect_left(all_times, time_delta)
+    print(f'{QUESTION_COUNT} operations took {time_delta} sec. {error_count} errors.')
+    print(f'This is {this_place + 1} place (by time) among {len(all_times) + 1}')
 
 
 if __name__ == '__main__':
