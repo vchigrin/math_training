@@ -23,7 +23,7 @@ def load_data():
 
 def main():
     dates_to_times = load_data()
-    fix, (time_ax, err_ax) = plt.subplots(2, 1)
+    fix, (time_ax, err_ax) = plt.subplots(2, 1, sharex=True)
     time_ax.set_title('Total test time')
     time_ax.scatter(dates_to_times.keys(),
                 [d['time_sec'] for d in dates_to_times.values()],
