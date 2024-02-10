@@ -38,9 +38,11 @@ def ask_question(question):
         print('{} {} {} = ... '.format(
             question.first, question.operation, question.second))
         try:
-            result = int(input())
+            result = input()
+            result = int(result)
         except ValueError:
-            result = None
+            print(f'Not a number {result}. Try again')
+            continue
         if result == question.expected:
             break
         print('WRONG!')
