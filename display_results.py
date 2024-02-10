@@ -10,6 +10,8 @@ def load_data():
     result = {}
     for file_name in os.listdir(RESULTS_DIR):
         date_str = file_name.split('.')[0]
+        if not date_str:
+            continue
         dt = datetime.datetime.strptime(date_str, '%Y-%m-%d_%H-%M-%S')
         with open(os.path.join(RESULTS_DIR, file_name), 'r') as f:
             items = json.load(f)
