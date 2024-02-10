@@ -7,6 +7,7 @@ import json
 import os
 import random
 import time
+import termcolor
 
 
 QUESTION_COUNT = 10
@@ -46,7 +47,7 @@ def ask_question(question):
             continue
         if result == question.expected:
             break
-        print('WRONG!')
+        print(termcolor.colored('WRONG!', 'red'))
         error_count += 1
     time_delta = time.time() - start_time
     return Result(question, error_count, time_delta)
@@ -94,7 +95,9 @@ def main():
     start = time.time()
     error_count = 0
     for question_idx in range(1, QUESTION_COUNT + 1):
-        print('# {}:'.format(question_idx))
+        print(termcolor.colored(
+            '# {}:'.format(question_idx),
+            'blue'))
         question = make_question()
         result = ask_question(question)
         error_count += result.error_count
@@ -103,8 +106,12 @@ def main():
     save_results(results)
     all_times.sort()
     this_place = bisect.bisect_left(all_times, time_delta)
-    print(f'{QUESTION_COUNT} operations took {time_delta} sec. {error_count} errors.')
-    print(f'This is {this_place + 1} place (by time) among {len(all_times) + 1}')
+    print(termcolor.colored(
+        f'{QUESTION_COUNT} operations took {time_delta:.3f} sec. {error_count} errors.',
+        'green'))
+    print(termcolor.colored(
+        f'This is {this_place + 1} place (by time) among {len(all_times) + 1}',
+        'green'))
 
 
 if __name__ == '__main__':
