@@ -112,6 +112,10 @@ def main():
     print(termcolor.colored(
         f'This is {this_place + 1} place (by time) among {len(all_times) + 1}',
         'green'))
+    percentile = ((this_place + 1) * 100.) / (len(all_times) + 1)
+    print(termcolor.colored(
+        f'This result is in the top {percentile:.3f}%',
+        'green'))
 
 
 if __name__ == '__main__':
