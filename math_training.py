@@ -75,7 +75,7 @@ def save_results(results):
     if not os.path.exists(dir_name):
         os.makedirs(dir_name)
     with open(file_name, 'w') as f:
-        json.dump(results_to_dicts(results), f, indent=2)
+        json.dump(results_to_dicts(results), f)
 
 def load_all_times():
     result = []
